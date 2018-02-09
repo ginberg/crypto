@@ -1,0 +1,100 @@
+---
+title: "Tutorial: Crypto Dashboard in R-Shiny"
+output: 
+  html_notebook:
+    toc: true
+---
+
+### 1. Intro
+
+Shiny is a package from RStudio that can be used to build interactive web pages with R. It is meant to R users who have no experience with web development, and you do not need to know any HTML/CSS/JavaScript.
+
+You can do quite a lot with Shiny: think of it as an easy way to make an interactive web page, and that web page can interact with R and display R objects (tables, plots or anything else you do in R). To get a sense of the wide range of things you can do with Shiny, you can visit [my Shiny server](gerinberg.com/shiny), which hosts some of my Shiny apps.
+
+This tutorial is a hands-on activity for learning how to build a Shiny app. In this activity, we will walk through the steps of building a Shiny app using a dataset that lets you explore the prices of cryptocurrencies in the last months. The app can be seen [here](https://ginberg.shinyapps.io/crypto)
+
+This tutorial should take approximately an hour to complete. If you want even more practice, another great tutorial is the official [Shiny tutorial](http://shiny.rstudio.com/tutorial).
+
+#### Getting started
+
+You will need to have the shiny package, so install if you have not done it yet:
+
+install.packages("shiny")
+To ensure you successfully installed Shiny, try running one of the demo apps.
+
+library(shiny)
+runExample("01_hello")
+If the example app is running, press Escape to close the app, and you are ready to build your first Shiny app!
+
+Exercise: Visit [ShowMeShiny](https://ShowMeShiny.com), which is a gallery of user-submitted Shiny apps, and click through some of the showcased apps. Get a feel for the wide range of things you can do with Shiny.
+
+### 2. Shiny app basics
+
+Every Shiny app is essentially composed of two parts: a web page that shows the app to the user, and a part that generates the content for that webpage. The app can either run on your laptop (such as when you’re running an app from RStudio) or on a computer somewhere else. You, as the Shiny app developer, need to write these two parts. In Shiny terminology, they are called UI (user interface) and server.
+
+UI is just a web document that the user gets to see, it’s HTML that you write using Shiny’s functions. The UI is responsible for creating the layout of the app and telling Shiny exactly where things go. The server is responsible for the logic of the app; it’s the set of instructions that tell the web page what to show when the user interacts with the page.
+
+If you look at the app we will be building, the page that you see is built with the UI code. You’ll notice there are some controls that you, as the user, can manipulate. If you adjust the cryptocurrencies or change the start data, you’ll notice that the plot get's updated. The UI is responsible for creating these controls and telling Shiny *where* to place the controls and where to place the plot, while the server is responsible for creating the actual plot.
+
+### 3. Create an empty Shiny app
+
+All Shiny apps, no matter how complex, follow the same pattern:
+
+```
+library(shiny)
+ui <- fluidPage()
+server <- function(input, output) {}
+shinyApp(ui = ui, server = server)
+```
+
+This piece of code is a minimal Shiny app that doesn’t do much. It initializes an empty UI and an empty server, and runs an app using these empty parts. Copy this template into a new file named app.R in a new folder. A few things you should keep in mind:
+
+- It is very important that the name of the file is app.R, otherwise it will not be recognized as a Shiny app.
+- You should not have R code after the shinyApp(ui = ui, server = server) line,  that line needs to be the last line in your file.
+- It is good practice to place this app in its own folder, and not in a folder that already has other R scripts or files, unless those other files are used by your app.
+- After saving the file, RStudio should recognize that this is a Shiny app, and you should see the usual Run button at the top change to Run App.
+
+If you don’t see the Run App button, it means you either have a very old version of RStudio, don’t have Shiny installed, or didn’t follow the file naming conventions.
+
+![Run App button.](basic_shiny.png)
+
+Click the Run App button, and now your app should run. You won’t see much because it’s an empty app, but you should see that the console has some text printed in the form of
+
+Listening on http://127.0.0.1:5219
+and that a little stop sign appeared at the top of the console. You’ll also notice that you can’t run any commands in the console. This is because R is busy: your R session is currently powering a Shiny app and listening for user interaction (which won’t happen because the app has nothing in it yet).
+
+Click the red stop button to stop the app, or press the Escape key.
+
+You may have noticed that when you click the Run App button, all it’s doing is just running the function shiny::runApp() in the console. You can run that command instead of clicking the button if you prefer. However, do not place the runApp() function inside the shiny app code!
+
+Exercise: Try running the empty app using the runApp() function instead of using the Run App button.
+
+#### 3.1 Alternate way to create a Shiny app: separate UI and server files
+
+Another way to define a Shiny app is by separating the UI and server code into two files: ui.R and server.R. This is the preferable way to write Shiny apps when the app is complex and involves more code, but in this tutorial we will be using the single file approach for simplicity.
+
+If you want to break up your app into these two files, you simply put all code that is assigned to the ui variable in ui.R and all the code assigned to the server function in server.R. When RStudio sees these two files in the same folder, it will know you’re writing a Shiny app. Note that if you use this method (instead of having one app.R file), then you do not need to include the shinyApp(ui = ui, server = server) line.
+
+Exercise: Try making a new Shiny app by creating the two files ui.R and server.R. Rememeber that they have to be in the same folder. Also remember to put them in a new, isolated folder (not where your app.R already exists).
+
+#### 3.2 Let RStudio fill out a Shiny app template for you
+
+You can also create a new Shiny app using RStudio’s menu by selecting File > New File > Shiny Web App…. If you do this, RStudio will let you choose if you want a single-file app (app.R) or a two-file app (ui.R+server.R). RStudio will initialize a simple functional Shiny app with some code in it. I personally don’t use this feature because I find it easier to simply type the few lines of a Shiny app and save the files.
+
+### 4. Load the dataset
+
+The dataset we’ll be using contains information about cryptocurrency prices of the last months. I have downloaded this data from the website [Coinmarketcap](https://coinmarketcap.com)
+[Download it]() now and place this file in the same folder as your Shiny app. Make sure the file is named crypto-data.csv.
+
+Add a line in your app to load the data into a variable called crypto. It should look something like this
+
+crypto <- read.csv("crypto-data.csv", stringsAsFactors = FALSE)
+
+Place this line in your app as the second line, just after library(shiny). Make sure the file path and file name are correct, otherwise your app won’t run. Try to run the app to make sure the file can be loaded without errors.
+
+If you want to verify that the app can successfully read the data, you can add a print()statement after reading the data. This won’t make anything happen in your Shiny app, but you will see a summary of the dataset printed in the console, which should let you know that the dataset was indeed loaded correctly. You can place the following line after reading the data:
+
+print(str(crypto)) 
+Once you get confirmation that the data is properly loaded, you can delete that line.
+
+Exercise: Load the csv file into R and have a look at the content. How big is it, what variables are there, etc.
