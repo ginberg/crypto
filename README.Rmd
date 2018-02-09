@@ -9,7 +9,7 @@ output:
 
 Shiny is a package from RStudio that can be used to build interactive web pages with R. It is meant to R users who have no experience with web development, and you do not need to know any HTML/CSS/JavaScript.
 
-You can do quite a lot with Shiny: think of it as an easy way to make an interactive web page, and that web page can interact with R and display R objects (tables, plots or anything else you do in R). To get a sense of the wide range of things you can do with Shiny, you can visit [my Shiny server](gerinberg.com/shiny), which hosts some of my Shiny apps.
+You can do quite a lot with Shiny: think of it as an easy way to make an interactive web page, and that web page can interact with R and display R objects (tables, plots or anything else you do in R). To get a sense of the wide range of things you can do with Shiny, you can visit [my Shiny server](http://gerinberg.com/shiny), which hosts some of my Shiny apps.
 
 This tutorial is a hands-on activity for learning how to build a Shiny app. In this activity, we will walk through the steps of building a Shiny app using a dataset that lets you explore the prices of cryptocurrencies in the last months. The app can be seen [here](https://ginberg.shinyapps.io/crypto)
 
@@ -56,11 +56,14 @@ This piece of code is a minimal Shiny app that doesn’t do much. It initializes
 
 If you don’t see the Run App button, it means you either have a very old version of RStudio, don’t have Shiny installed, or didn’t follow the file naming conventions.
 
-![Run App button.](basic_shiny.png)
+![](basic_shiny.png)
+
+#### Start & Stop the app 
 
 Click the Run App button, and now your app should run. You won’t see much because it’s an empty app, but you should see that the console has some text printed in the form of
 
 Listening on http://127.0.0.1:5219
+
 and that a little stop sign appeared at the top of the console. You’ll also notice that you can’t run any commands in the console. This is because R is busy: your R session is currently powering a Shiny app and listening for user interaction (which won’t happen because the app has nothing in it yet).
 
 Click the red stop button to stop the app, or press the Escape key.
@@ -84,7 +87,7 @@ You can also create a new Shiny app using RStudio’s menu by selecting File > N
 ### 4. Load the dataset
 
 The dataset we’ll be using contains information about cryptocurrency prices of the last months. I have downloaded this data from the website [Coinmarketcap](https://coinmarketcap.com)
-[Download it]() now and place this file in the same folder as your Shiny app. Make sure the file is named crypto-data.csv.
+[Download it](https://github.com/ginberg/crypto/blob/master/crypto-data.csv) now and place this file in the same folder as your Shiny app. Make sure the file is named crypto-data.csv.
 
 Add a line in your app to load the data into a variable called crypto. It should look something like this
 
