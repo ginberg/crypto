@@ -7,7 +7,8 @@ r_github_packages:
 - rstudio/shinytest
 install:
 - R -e "install.packages('devtools')"
-- R -e "install.packages('xts')"
 - R -e "devtools::install_github('rstudio/shinytest')"
+- R -e "install.packages('xts')"
+- R -e "install.packages('dygraphs')"
 script:
   - Rscript run_tests.R
