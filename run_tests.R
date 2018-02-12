@@ -1,4 +1,4 @@
 library(shinytest)
 
 # execute shiny tests
-testApp()
+testApp("final")
