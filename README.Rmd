@@ -103,8 +103,132 @@ Once you get confirmation that the data is properly loaded, you can delete that 
 
 Exercise: Load the csv file into R and have a look at the content. How big is it, what variables are there, etc.
 
-### 5. Build the UI
+### 5. [UI] Build the UI
 
 Let’s start with creating the User Interface (UI). When creating a shiny app, this is usually the first step.
 
 #### 5.1 Add a title
+
+Shiny has a function titlePanel() to create a title for your application. When using this function it adds the title to the top of the page. Next to this, it will set the title of the web page. So, you will see this title, when looking at the name of the tab in your browser. 
+
+Overwrite the fluidPage() that you have added before, so it has a titlePanel like below:
+
+```
+fluidPage(
+  titlePanel("Cryptocurrency Dashboard")
+)
+```
+
+#### 5.2 Add Layout
+
+We need a way to structure our input elements on the page. In shiny, we can use different Layouts to achieve a certain structure. On [this page](https://shiny.rstudio.com/articles/layout-guide.html) you can find a detailed description. For now, we will use a simple and populair layout, called the sidebarLayout. In this layout, part of the screen is dedicated to a sidebar which is meant for your inputs. The other part of the screen contains the output, in our case this will be a chart.
+
+Add the following code after the titlePanel()
+
+```
+sidebarLayout(
+  sidebarPanel(""),
+  mainPanel("")
+)
+```
+
+Inside the fluidPage() function, all arguments need to be separated by a comma, so make sure you add a comma after the titlePanel.
+
+### 6. [UI] Adding inputs
+
+To make our application interactive, we are going to add inputs. These inputs enable us to filter the data in the way we want. Below, you see which inputs can be used with Shiny.
+
+![](images/basic_widgets.png)
+
+#### 6.1 Add the cryptocurrency input
+
+The first input we want is to filter on the crypto currencies. My dataset contains data about the currencies Bitcoin, Ethereum, LiteCoin, Stellar, Neo, EOS and ChainLink. But what if you are only interested in Bitcoin and Ethereum? 
+When looking at the available inputs, the best input is the selectInput(). Please see the help of this function for a moment with ?selectInput(). What arguments should we supply?
+
+The first argument is the **inputId**, you will find this parameter in all inputs since each input should be unique. Furthermore this inputId is important since we will use it in the server to reference this input. The next argument is the label, this one is also found in most input elements and the contents of this field will be showed on our page.
+
+
+
+```
+selectInput('selectCoins', 'Select crypto(s)', choices = c("bitcoin", "ethereum", "litecoin", "neo"), selected = c("bitcoin", "ethereum"), multiple = T)
+```
+
+
+#### 6.2 Add the Market Cap / Price input
+
+
+
+#### 6.3 Add the Date input
+
+
+
+
+### 7. [Server] Build the Reactive Data
+
+
+
+#### 7.1 Reactivity
+
+
+#### 7.1 Reactive component getData
+
+
+
+### 8. [Server] Build the graph
+
+
+
+
+
+
+### 9. Styling & Formatting
+
+
+
+
+
+
+### 10. Final code
+
+Yeah, you did it, you created your shiny app! You should be able to run the application and the graph should be updated when changing the inputs.
+
+The final code can be found [here](https://raw.githubusercontent.com/ginberg/crypto/master/final/app.R)
+
+### Improvements / Tips
+
+
+
+#### Share your app with others
+
+
+#### Handy add-on packages to Shiny
+
+Shiny is getting more populair and a lot of people have written add-on packages that are useful.
+
+DT: Datatables with lots of options, e.g. formatting, paging, exporting
+ggplot2: Add plots to your apps
+plotly: Similar to ggplot2, but these plots are interactive
+shinyjs: Makes your app more interactive by using javascript functionality
+
+#### Use realtime data in your dashboard
+
+In my own cryptocurrency dashboard I am not using a static dataset, but data directly from the the website coinmarketcap. If you are interested on how to do this, please contact me.
+
+### Resources
+
+[Shiny official tutorial](http://shiny.rstudio.com/tutorial/)
+[Share your apps on shinyapps.io](http://www.shinyapps.io/)
+[Host your app on your own Shiny server](http://gerinberg.com/2017/04/12/deploying-shiny-apps-on-aws-using-docker/)
+[Learn about reactivity in shiny](https://shiny.rstudio.com/articles/reactivity-overview.html)
+[Shiny tips & tricks for improving your apps and solving common problems]()
+
+### Acknowledgements
+
+- Thanks for the people at RStudio for creating this great framework. I have used quite a lot from their documentation when preparing this tutorial.
+
+- Thanks to the team at https://coinmarketcap.com for supplying the data.
+
+If you found this tutorial usefull, I would appreciate a (small) contribution in exchange for the hours I have spend on this tutorial.
+
+ETH: 0x7E887e9F9566083C392a3827e06BE0767069cA8C
+LTC: LYuh4DebNEfG1FGVbp3WdUT4gWkzE9D3oL
