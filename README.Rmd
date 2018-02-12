@@ -102,3 +102,9 @@ print(str(crypto))
 Once you get confirmation that the data is properly loaded, you can delete that line.
 
 Exercise: Load the csv file into R and have a look at the content. How big is it, what variables are there, etc.
+
+### 5. Build the UI
+
+Let’s start with creating the User Interface (UI). When creating a shiny app, this is usually the first step.
+
+#### 5.1 Add a title
