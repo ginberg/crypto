@@ -80,13 +80,14 @@ If you want to break up your app into these two files, you simply put all code t
 
 Exercise: Try making a new Shiny app by creating the two files ui.R and server.R. Rememeber that they have to be in the same folder. Also remember to put them in a new, isolated folder (not where your app.R already exists).
 
-#### 3.2 Let RStudio fill out a Shiny app template for you
+#### 3.2 Let RStudio generate a Shiny app template
 
 You can also create a new Shiny app using RStudio’s menu by selecting File > New File > Shiny Web App…. If you do this, RStudio will let you choose if you want a single-file app (app.R) or a two-file app (ui.R+server.R). RStudio will initialize a simple functional Shiny app with some code in it. I personally don’t use this feature because I find it easier to simply type the few lines of a Shiny app and save the files.
 
 ### 4. Load the dataset
 
 The dataset we’ll be using contains information about cryptocurrency prices of the last months. I have downloaded this data from the website [Coinmarketcap](https://coinmarketcap.com)
+
 [Download it](https://github.com/ginberg/crypto/blob/master/crypto-data.csv) now and place this file in the same folder as your Shiny app. Make sure the file is named crypto-data.csv.
 
 Add a line in your app to load the data into a variable called crypto. It should look something like this
@@ -95,7 +96,7 @@ crypto <- read.csv("crypto-data.csv", stringsAsFactors = FALSE)
 
 Place this line in your app as the second line, just after library(shiny). Make sure the file path and file name are correct, otherwise your app won’t run. Try to run the app to make sure the file can be loaded without errors.
 
-If you want to verify that the app can successfully read the data, you can add a print()statement after reading the data. This won’t make anything happen in your Shiny app, but you will see a summary of the dataset printed in the console, which should let you know that the dataset was indeed loaded correctly. You can place the following line after reading the data:
+If you want to verify that the app can successfully read the data, you can add a print() statement after reading the data. This will print the output of the file to the console (nothing will be seen yet in the user interface!), which should let you know that the dataset was indeed loaded correctly. You can place the following line after reading the data:
 
 print(str(crypto)) 
 Once you get confirmation that the data is properly loaded, you can delete that line.
