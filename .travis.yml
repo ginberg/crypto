@@ -1,0 +1,7 @@
+language: R
+r:
+  - release
+sudo: false
+cache: packages
+script:
+  - Rscript run_tests.R

@@ -56,7 +56,7 @@ This piece of code is a minimal Shiny app that doesn’t do much. It initializes
 
 If you don’t see the Run App button, it means you either have a very old version of RStudio, don’t have Shiny installed, or didn’t follow the file naming conventions.
 
-![](basic_shiny.png)
+![](images/basic_shiny.png)
 
 #### Start & Stop the app 
 
