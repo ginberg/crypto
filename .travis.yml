@@ -1,0 +1,10 @@
+language: R
+r:
+  - release
+sudo: false
+cache: packages
+install:
+  - R -e "install.packages('devtools')"
+  - R -e "devtools::install_github('rstudio/rmarkdown')"
+script:
+  - R -e "rmarkdown::render('README.Rmd')"
