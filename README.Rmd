@@ -217,10 +217,14 @@ In my own cryptocurrency dashboard I am not using a static dataset, but data dir
 ### Resources
 
 [Shiny official tutorial](http://shiny.rstudio.com/tutorial/)
+
 [Share your apps on shinyapps.io](http://www.shinyapps.io/)
+
 [Host your app on your own Shiny server](http://gerinberg.com/2017/04/12/deploying-shiny-apps-on-aws-using-docker/)
+
 [Learn about reactivity in shiny](https://shiny.rstudio.com/articles/reactivity-overview.html)
-[Shiny tips & tricks for improving your apps and solving common problems]()
+
+[Shiny tips & tricks for improving your apps and solving common problems](https://deanattali.com/blog/advanced-shiny-tips)
 
 ### Acknowledgements
 
@@ -231,4 +235,5 @@ In my own cryptocurrency dashboard I am not using a static dataset, but data dir
 If you found this tutorial usefull, I would appreciate a (small) contribution in exchange for the hours I have spend on this tutorial.
 
 ETH: 0x7E887e9F9566083C392a3827e06BE0767069cA8C
+
 LTC: LYuh4DebNEfG1FGVbp3WdUT4gWkzE9D3oL
