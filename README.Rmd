@@ -145,22 +145,41 @@ To make our application interactive, we are going to add inputs. These inputs en
 The first input we want is to filter on the crypto currencies. My dataset contains data about the currencies Bitcoin, Ethereum, LiteCoin, Stellar, Neo, EOS and ChainLink. But what if you are only interested in Bitcoin and Ethereum? 
 When looking at the available inputs, the best input is the selectInput(). Please see the help of this function for a moment with ?selectInput(). What arguments should we supply?
 
-The first argument is the **inputId**, you will find this parameter in all inputs since each input should be unique. Furthermore this inputId is important since we will use it in the server to reference this input. The next argument is the label, this one is also found in most input elements and the contents of this field will be showed on our page.
-
-
+The first argument is the **inputId**, you will find this parameter in all inputs since each input should be unique. Furthermore the inputId is important since we will use it in the server to reference this input. The next argument is the label, this one is also found in most input elements and the contents of this field will be showed on our page.
+The third parameter is called **choices**, it is used to specify all the items in this input. The (optional) **selected** parameter can be used to specify which items should be selected when the application starts. It should be a subset of the choices parameter. By default you can only select one item, however using the parameter **multiple** we can change this.
+Add the code below inside your sidebarPanel.
 
 ```
-selectInput('selectCoins', 'Select crypto(s)', choices = c("bitcoin", "ethereum", "litecoin", "neo"), selected = c("bitcoin", "ethereum"), multiple = T)
+selectInput('selectCoins', 
+            'Select crypto(s)',
+             choices = c("bitcoin", "ethereum", "litecoin", "neo"), 
+             selected = c("bitcoin", "ethereum"), multiple = T)
 ```
 
 
 #### 6.2 Add the Market Cap / Price input
 
+We can look at different metrics regarding currencies, like Price, Market Cap, number of coins, etc. To select which metric we are interested in, we will use another selectInput.
+Add the code below after the first input, separated by a comma.
 
+```
+selectInput('selectOutput', 
+            'Select output', 
+             choices = c('Market Cap' = "market", Price = "price"))
+```
 
 #### 6.3 Add the Date input
 
+We all know that the cryptocurrency market is volatile, so it's very important to be able to select a certain period in time. Shiny has a dataRangeInput that we can use to specify a start and end date.
 
+Before looking at the code below, can you find out how to create this dateRangeInput (hint: use ?dateRangeInput())?
+
+```
+dateRangeInput('selectDate', 
+               'Select date', 
+                start = min(crypto$Date), 
+                end = max(crypto$Date)),
+```
 
 
 ### 7. [Server] Build the Reactive Data
