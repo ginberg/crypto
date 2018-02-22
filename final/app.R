@@ -49,7 +49,8 @@ server <- function(input, output) {
   output$priceGraph <- renderDygraph({
     data <- getData()
     time_series <- xts(data, order.by = data$Date)
-    dygraph(time_series)
+    dygraph(time_series) %>% 
+      dyRangeSelector(dateWindow = c(min(data$Date), max(data$Date))) 
   })
 }
 
