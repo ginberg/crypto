@@ -50,7 +50,8 @@ server <- function(input, output) {
     data <- getData()
     time_series <- xts(data, order.by = data$Date)
     dygraph(time_series) %>% 
-      dyRangeSelector(dateWindow = c(min(data$Date), max(data$Date))) 
+      dyRangeSelector(dateWindow = c(min(data$Date), max(data$Date))) %>%
+      dyOptions(useDataTimezone = TRUE)
   })
 }
 
