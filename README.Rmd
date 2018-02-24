@@ -159,8 +159,8 @@ selectInput('selectCoins',
 
 #### 6.2 Add the Market Cap / Price input
 
-We can look at different metrics regarding currencies, like Price, Market Cap, number of coins, etc. To select which metric we are interested in, we will use another selectInput.
-Add the code below after the first input, separated by a comma.
+We can look at different metrics regarding currencies, like Price, Market Cap, number of coins, etc. To select which metric we are interested in, we will use another selectInput. For now we will only add the Price and Market Cap to it. 
+Please add the code below after the first input, separated by a comma.
 
 ```
 selectInput('selectOutput', 
@@ -170,10 +170,11 @@ selectInput('selectOutput',
 
 #### 6.3 Add the Date input
 
-We all know that the cryptocurrency market is volatile, so it's very important to be able to select a certain period in time. Shiny has a dataRangeInput that we can use to specify a start and end date.
+We all know that the cryptocurrency market is volatile, so it's important to be able to select a certain period in time. Shiny has a dataRangeInput that we can use to specify a start and end date.
 
-Before looking at the code below, can you find out how to create this dateRangeInput (hint: use ?dateRangeInput())?
+Can you find out how to create this dateRangeInput (hint: use ?dateRangeInput())?
 
+It should look the code below, I hope you had something similar. So, go ahead and add this after the other inputs.  
 ```
 dateRangeInput('selectDate', 
                'Select date', 
@@ -195,14 +196,14 @@ dateRangeInput('selectDate',
 
 ### 8. [Server] Build the graph
 
-
+Explanation about the graph + js library
 
 
 
 
 ### 9. Styling & Formatting
 
-
+Why? explain column width?
 
 
 
@@ -215,10 +216,12 @@ The final code can be found [here](https://raw.githubusercontent.com/ginberg/cry
 
 ### Improvements / Tips
 
-
+Though you have created your first application now, you might want to change/improve things. For the main tutorial part I didn't want to make it too complicated, but if you are up for more, see below for some tips to improve you application. 
 
 #### Share your app with others
 
+It's nice that you can use your own application but what about others? At one point you probably want to share your apps with other people. There are multiple options if you want to share it.
+The easiest way is to use the platform [shinyapps.io]((http://www.shinyapps.io/)). This website offers different plans, the good thing is that there is a 'free' plan, so it doesn't cost any money to share your application with everyone on the world! At the moment, this plan is limited to 5 applications and for only 25 hours/month. If you need more, you can upgrade to a paid plan.
 
 #### Handy add-on packages to Shiny
 
