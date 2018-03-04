@@ -12,11 +12,10 @@ ui <- fluidPage(
     sidebarPanel(
       selectInput('selectCoins', 'Select crypto(s)', choices = c("bitcoin", "ethereum", "litecoin", "neo"), selected = c("bitcoin", "ethereum"), multiple = T),
       selectInput('selectOutput', 'Select output', choices = c('Market Cap' = "market", Price = "price")),
-      dateRangeInput('selectDate', 'Select date', start = min(crypto$Date), end = max(crypto$Date)),
-      width = 2
+      dateRangeInput('selectDate', 'Select date', start = min(crypto$Date), end = max(crypto$Date))
     ),
     mainPanel(
-      div(dygraphOutput("priceGraph", width = "100%", height = "800px"), class = "graph"), width = 10
+      div(dygraphOutput("priceGraph", width = "100%", height = "800px"))
     )
   )
 )

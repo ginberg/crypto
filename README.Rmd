@@ -182,31 +182,133 @@ dateRangeInput('selectDate',
                 end = max(crypto$Date)),
 ```
 
+#### 6.4 Add the Plot placeholder
 
-### 7. [Server] Build the Reactive Data
 
+#### 6.5 Code so far
 
+Your code should like this now.
+
+```
+library(shiny)
+crypto <- read.csv("crypto-data.csv", stringsAsFactors = FALSE)
+
+ui <- fluidPage(
+  titlePanel('Cryptocurrency dashboard'),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput('selectCoins', 'Select crypto(s)', choices = c("BTC", "ETH", "LTC"), multiple = T),
+      selectInput('selectOutput', 'Select output', choices = c('Market Cap' = "market", Price = "price")),
+      dateRangeInput('selectDate', 'Select date', start = min(crypto$Date), end = max(crypto$Date))
+    ),
+    mainPanel(dygraphOutput("priceGraph"))
+  )
+)
+
+server <- function(input, output) {}
+
+shinyApp(ui = ui, server = server)
+```
+
+### 7. [Server] Server concepts
+
+Until now,we only wrote code that created the user interface and the placeholder for the graph. If you would have 2 files for the app, everything so far would be in ui.R. 
+Now we will write the server function, which is responsible for listening to changes to the inputs and creating the output in the app. Usually, this is the more difficult part of the application to write.
+
+If you look at the server function, you’ll notice that it is always defined with (at least) two arguments: ***input*** and ***output***. These two arguments are always required! 
+Both of the arguments are lists. Input is a list that you can use to read the values from the input components at a given time. So, for example, when a user changes the selectInput of currencies, the value of this item in the input list will change.
+Output is a list where you will save your output objects to. These output objects could be tables, graphs, etc. In our application, we will just write one graph to the output.
 
 #### 7.1 Reactivity
 
+Shiny uses a concept called ***Reactivity***, which is used in reactive programming. It is a programming style, just like Object-Oriented or Functional programming. Reactivity in Shiny is not easy, but it is very important to understand this. It took me a while to work with it, but now I really like it.
 
-#### 7.1 Reactive component getData
+Basically, what reactivity does is to enable your outputs to react to changes in inputs. This means that when the value of a variable x changes, then anything that relies on x gets re-evaluated. This is very different from what you are used to in R. Let's have a look the the code below, where we have the variables 'time' and 'price':
+```{r}
+time <- 10
+price <- time + 1
+time <- 20
+```
 
+What is the value of price? It’s 11 obviously. But in reactive programming, if time is a reactive variable, then the price variable would be 21 because it would be updated whenever time is changed. This is a technique that is very useful for creating responsive Shiny apps. However, it might be strange at first because it’s probably a very different concept from what you’re used to.
 
+Only reactive variables behave the way I just described. In Shiny all inputs are automatically reactive. So, in the server you can always use input$x, for a given input with name x, and you can be sure it contains the current value of that input at present.
 
-### 8. [Server] Build the graph
+You might be wondering how to use this exactly in the server. Let's have a look at the code below:
+```{r}
+output$myoutput <- renderPlot({
+  color <- input$mycolour
+  number <- input$mynumber
+  plot(BJsales[1:number], col = color)
+})
+```
 
-Explanation about the graph + js library
+The above render function creates a plot of sales data. It accesses two different inputs: input$mycolour and input$mynumber. This means that this code block depends on both of these variables, so whenever either one of the two inputs is updated, the code gets re-executed with the new input values and output$myoutput will be updated.
 
+### 8. [Server] Build the Reactive Data
 
+Now, we understand the concept of reactivity, we can write our code to implement the server part. Our server implementation consits of two steps: make sure we apply our input filters on our crypto dataset and build the output graph given this data. In this section, we will do the first.
 
+To filter our data using the filters, we will use a 'reactive' block. This looks similar to the renderPlot above, but a reactive block does not create a plot or a table, it just outputs some reactive data.
+The reactive block for our data, consists of 3 parts
 
-### 9. Styling & Formatting
+- get the input values
 
-Why? explain column width?
+- filter the data
 
+- return the data
 
+Please have a look at the code below if you can understand globally what it does. Then add it to the server function.
 
+```{r}
+getData <- reactive({
+    # get inputs 
+    selectedCoins <- input$selectCoins
+    selectedOutput <- input$selectOutput
+    dates <- input$selectDate
+    startDate <- dates[1]
+    endDate <- dates[2]
+    
+    # filter data
+    cryptoColumns <- colnames(crypto)
+    coinColumns <- cryptoColumns[cryptoColumns %in% paste0(selectedOutput, selectedCoins)]
+    selectedColumns <- append("Date", coinColumns)
+    data <- crypto[crypto$Date >= startDate & crypto$Date <= endDate, selectedColumns, drop=FALSE]
+    
+    # formatting in case of market cap
+    if(selectedOutput == "market"){
+      data[coinColumns] <- lapply(data[coinColumns], FUN = function(x) x/1000000000)
+    }
+    colnames(data) <- gsub(selectedOutput, "", colnames(data))
+    data
+  })
+```
+
+### 9. [Server] Build the graph
+
+We have done the hardest part now by creating the reactive data block. You will see that using this data to create the graph is pretty easy.
+
+There are a lot of libraries in R, to create graphs. A very popular one is ggplot2, which supports a lot of different plots. However it is not interactive, it doesn't use javascript to support hover texts for example. We will use the library [***dygraphs***](http://dygraphs.com/) since it is fast, interactive and it is well suited for time series data.
+
+The creation of the graph output consists of four steps. Try to create it yourself given the hints, before looking at the code below!
+
+- create the render block. It looks similar to what is described in secion 7.1 ('renderPlot' line), but now we need to call it renderDygraph. 
+
+- get the data. We call our reactive data block with the function() syntax, .e.g. getData().
+
+- transform the data to time series. Dygraphs requires that the input for the graph is a time series object. We can create this object through the 'xts' function. It should have 2 arguments, the first one the data and the 'order.by' arguments needs to be the Date, since we want to order our data by Date.
+
+- create the dygraph object. We just need to pass on argument, the time series data. See the documentation of dygraph with ?dygraph, to see the optional parameters.
+
+The creation of the dygraph should like below. Add this code to the server function after the getData reactive.
+
+```{r}
+output$priceGraph <- renderDygraph({
+    data <- getData()
+    time_series <- xts(data, order.by = data$Date)
+    dygraph(time_series)
+  })
+```
 
 ### 10. Final code
 
@@ -227,10 +329,13 @@ The easiest way is to use the platform [shinyapps.io]((http://www.shinyapps.io/)
 
 Shiny is getting more populair and a lot of people have written add-on packages that are useful.
 
-DT: Datatables with lots of options, e.g. formatting, paging, exporting
-ggplot2: Add plots to your apps
-plotly: Similar to ggplot2, but these plots are interactive
-shinyjs: Makes your app more interactive by using javascript functionality
+- DT: Datatables with lots of options, e.g. formatting, paging, exporting
+
+- ggplot2: Base R library to create plots
+
+- plotly: Similar to ggplot2, but these plots are interactive
+
+- shinyjs: Makes your app more interactive by using javascript functionality
 
 #### Use realtime data in your dashboard
 

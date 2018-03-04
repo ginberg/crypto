@@ -9,7 +9,7 @@ ui <- fluidPage(
       selectInput('selectOutput', 'Select output', choices = c('Market Cap' = "market", Price = "price")),
       dateRangeInput('selectDate', 'Select date', start = min(crypto$Date), end = max(crypto$Date))
     ),
-    mainPanel("TODO")
+    mainPanel(dygraphOutput("priceGraph"))
   )
 )
 
