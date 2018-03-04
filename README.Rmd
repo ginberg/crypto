@@ -331,7 +331,7 @@ Though you have created your first application now, you might want to change/imp
 #### Share your app with others
 
 It's nice that you can use your own application but what about others? At one point you probably want to share your apps with other people. There are multiple options if you want to share it.
-The easiest way is to use the platform [shinyapps.io]((http://www.shinyapps.io/)). This website offers different plans, the good thing is that there is a 'free' plan, so it doesn't cost any money to share your application with everyone on the world! At the moment, this plan is limited to 5 applications and for only 25 hours/month. If you need more, you can upgrade to a paid plan.
+The easiest way is to use the platform [shinyapps.io](http://www.shinyapps.io/). This website offers different plans, the good thing is that there is a 'free' plan, so it doesn't cost any money to share your application with everyone on the world! At the moment, this plan is limited to 5 applications and for only 25 hours/month. If you need more, you can upgrade to a paid plan.
 
 #### Handy add-on packages to Shiny
 
@@ -344,6 +344,11 @@ Shiny is getting more populair and a lot of people have written add-on packages 
 - plotly: Similar to ggplot2, but these plots are interactive
 
 - shinyjs: Makes your app more interactive by using javascript functionality
+
+#### Formatting & Styling
+
+The application can be improved by using custom settings or add CSS to the application. For example, we could make the menu on the left less wide so there is more space for the graph.
+See the documentation of sidebarPanel (?sidebarPanel) for setting a custom width and see [this page](https://shiny.rstudio.com/articles/css.html) to add custom CSS.
 
 #### Use realtime data in your dashboard
 
