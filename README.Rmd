@@ -232,7 +232,7 @@ Output is a list where you will save your output objects to. These output object
 Shiny uses a concept called ***Reactivity***, which is used in reactive programming. It is a programming style, just like Object-Oriented or Functional programming. Reactivity in Shiny is not easy, but it is very important to understand this. It took me a while to work with it, but now I really like it.
 
 Basically, what reactivity does is to enable your outputs to react to changes in inputs. This means that when the value of a variable x changes, then anything that relies on x gets re-evaluated. This is very different from what you are used to in R. Let's have a look the the code below, where we have the variables 'time' and 'price':
-```{r}
+```
 time <- 10
 price <- time + 1
 time <- 20
@@ -243,7 +243,7 @@ What is the value of price? It’s 11 obviously. But in reactive programming, if
 Only reactive variables behave the way I just described. In Shiny all inputs are automatically reactive. So, in the server you can always use input$x, for a given input with name x, and you can be sure it contains the current value of that input at present.
 
 You might be wondering how to use this exactly in the server. Let's have a look at the code below:
-```{r}
+```
 output$myoutput <- renderPlot({
   color <- input$mycolour
   number <- input$mynumber
@@ -268,7 +268,7 @@ The reactive block for our data, consists of 3 parts
 
 Please have a look at the code below if you can understand globally what it does. Then add it to the server function.
 
-```{r}
+```
 getData <- reactive({
     # get inputs 
     selectedCoins <- input$selectCoins
@@ -310,7 +310,7 @@ The creation of the graph output consists of four steps. Try to create it yourse
 
 The creation of the dygraph should like below. Add this code to the server function after the getData reactive.
 
-```{r}
+```
 output$priceGraph <- renderDygraph({
     data <- getData()
     time_series <- xts(data, order.by = data$Date)
