@@ -247,7 +247,7 @@ You might be wondering how to use this exactly in the server. Let's have a look 
 output$myoutput <- renderPlot({
   color <- input$mycolour
   number <- input$mynumber
-  plot(BJsales[1:number], col = color)
+  plot(BJsales[1:number, ], col = color)
 })
 ```
 
