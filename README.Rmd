@@ -90,11 +90,12 @@ The dataset we’ll be using contains information about cryptocurrency prices of
 
 [Download it](https://github.com/ginberg/crypto/blob/master/crypto-data.csv) now and place this file in the same folder as your Shiny app. Make sure the file is named crypto-data.csv.
 
-Add a line in your app to load the data into a variable called crypto. It should look something like this
+Add these lines in your app to load the data into a variable called crypto and transform the Date column. It should look something like this
 
 crypto <- read.csv("crypto-data.csv", stringsAsFactors = FALSE)
+crypto$Date <- as.Date(crypto$Date)
 
-Place this line in your app as the second line, just after library(shiny). Make sure the file path and file name are correct, otherwise your app won’t run. Try to run the app to make sure the file can be loaded without errors.
+Place these lines in your app just after library(shiny). Make sure the file path and file name are correct, otherwise your app won’t run. Try to run the app to make sure the file can be loaded without errors.
 
 If you want to verify that the app can successfully read the data, you can add a print() statement after reading the data. This will print the output of the file to the console (nothing will be seen yet in the user interface!), which should let you know that the dataset was indeed loaded correctly. You can place the following line after reading the data:
 
@@ -184,14 +185,21 @@ dateRangeInput('selectDate',
 
 #### 6.4 Add the Plot placeholder
 
+We need to define a placeholder for our graph output. Basically this means, that we are defining that the graph output should be in our user interface on a certain position. In the server we will create the graph and 'fill' this placeholder. The output to use is called 'dygraphOutput', we will give it the id 'priceGraph' and set the width and height. Furthermore it should be placed in the mainPanel.
+Therfore the line for the mainPanel, should look like this:
+
+```
+mainPanel(dygraphOutput("priceGraph", width = "100%", height = "800px"))
+```
 
 #### 6.5 Code so far
 
-Your code should like this now.
+We have defined our user interface by now. I hope you were able to follow all the steps. Your code should look like below by now.
 
 ```
 library(shiny)
 crypto <- read.csv("crypto-data.csv", stringsAsFactors = FALSE)
+crypto$Date <- as.Date(crypto$Date)
 
 ui <- fluidPage(
   titlePanel('Cryptocurrency dashboard'),
@@ -201,7 +209,7 @@ ui <- fluidPage(
       selectInput('selectOutput', 'Select output', choices = c('Market Cap' = "market", Price = "price")),
       dateRangeInput('selectDate', 'Select date', start = min(crypto$Date), end = max(crypto$Date))
     ),
-    mainPanel(dygraphOutput("priceGraph"))
+    mainPanel(dygraphOutput("priceGraph", width = "100%", height = "800px")))
   )
 )
 
