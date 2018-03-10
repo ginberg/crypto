@@ -1,6 +1,5 @@
 library(data.table)
 source("coin_data.R")
-source("crypto_dashboard.R")
 
 coinList <- listCoins()
 coinSymbols <- coinList$symbol
@@ -12,3 +11,10 @@ initialEndDate <- Sys.Date()
 initialStartDateFormatted <- format(initialStartDate, "%Y%m%d")
 initialEndDateFormatted <- format(initialEndDate, "%Y%m%d")
 initialCacheDateFormatted <- format(Sys.Date()-360, "%Y%m%d")
+
+# Get coin data
+cachedCoinList <- data.table(listCoins())
+initialCoinList <- cachedCoinList[symbol %in% initialSelectedCoins, ]
+cachedCoinData <- data.table(getCoinData(initialCoinList, initialCacheDateFormatted, initialEndDateFormatted))
+
+source("crypto_dashboard.R")

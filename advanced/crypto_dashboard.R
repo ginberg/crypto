@@ -5,7 +5,11 @@ library(parallel)
 cryptoDashboardUI <- function(id) {
   ns <- NS(id)
   
-  tagList(
+  fluidPage(
+    tagList(tags$head(
+      tags$link(rel="stylesheet", type="text/css", href="style.css")
+    )),
+    p(),
     div(titlePanel('Cryptocurrency dashboard'), class = "title"),
     sidebarLayout(
       div(sidebarPanel(
