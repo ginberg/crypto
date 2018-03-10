@@ -1,0 +1,18 @@
+/* Generic styling */
+
+.title {
+  margin-left: 25%;
+}
+
+.selection {
+   margin-top: 2%;
+}
+
+.graph {
+   margin-top: 1%;
+}
+
+.dygraph-legend {
+  left: 100px !important;
+  background-color: transparent !important;
+}

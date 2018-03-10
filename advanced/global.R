@@ -1,14 +1,12 @@
-library(shiny)
-library(dygraphs)
-library(parallel)
 library(data.table)
 source("coin_data.R")
+source("crypto_dashboard.R")
 
 coinList <- listCoins()
 coinSymbols <- coinList$symbol
 
 availableOutputs <- c('Market Cap' = "market", Price = "price")
-initialSelectedCoins <- c("BTC", "ETH", "XLM", "LTC", "NEO", "EOS", "IOATA", "LINK")
+initialSelectedCoins <- c("BTC", "ETH", "XLM", "LTC", "NEO")
 initialStartDate <- Sys.Date()-120
 initialEndDate <- Sys.Date()
 initialStartDateFormatted <- format(initialStartDate, "%Y%m%d")
