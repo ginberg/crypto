@@ -352,7 +352,7 @@ See the documentation of sidebarPanel (?sidebarPanel) for setting a custom width
 
 #### Use realtime data in your dashboard
 
-In my own cryptocurrency dashboard I am not using a static dataset, but data directly from the the website coinmarketcap. If you are interested on how to do this, please contact me.
+In my own cryptocurrency dashboard I am not using a static dataset, but data directly from the the website coinmarketcap. If you are interested on how to do this, please see the code of my own crypto dashboard in the [advanced folder](https://raw.githubusercontent.com/ginberg/crypto/master/advanced)
 
 ### Resources
 
