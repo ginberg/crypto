@@ -352,7 +352,7 @@ See the documentation of sidebarPanel (?sidebarPanel) for setting a custom width
 
 #### Use realtime data in your dashboard
 
-In my own cryptocurrency dashboard I am not using a static dataset, but data directly from the the website coinmarketcap. If you are interested on how to do this, please see the code of my own crypto dashboard in the [advanced folder](https://github.com/ginberg/crypto/tree/master/advanced)
+In my own cryptocurrency dashboard I am not using a static dataset, but data directly from the the website coinmarketcap. If you are interested on how to do this, please see the code of my own crypto dashboard in the [advanced folder](https://github.com/ginberg/crypto/tree/master/advanced). This example uses webscraping to get the data in realtime. Furthermore you will see, that I have splitted the application in a server and ui file. The server and ui are very compact, since I have used the [shiny module approach](https://shiny.rstudio.com/articles/modules.html) to integrate the crypto dashboard.
 
 ### Resources
 
