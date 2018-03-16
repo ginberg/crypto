@@ -82,7 +82,7 @@ getCoinData <- function(coins, startDate, endDate) {
 listCoins <- function(coin = NULL) {
   today <- gsub("-", "", lubridate::today())
   json <-
-    "https://files.coinmarketcap.com/generated/search/quick_search.json"
+    "https://s2.coinmarketcap.com/generated/search/quick_search.json"
   coins <- jsonlite::read_json(json, simplifyVector = TRUE)
   name <- coins$name
   slug <- coins$slug
